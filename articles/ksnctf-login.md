@@ -2,7 +2,7 @@
 title: "ksnctf login write-up" 
 emoji: "📝" 
 type: "tech" 
-topics: ["ctf", "crypto"] 
+topics: ["ctf", "SQL", "PHP", "python"] 
 published: true
 --- 
 
