@@ -1,5 +1,5 @@
 --- 
-title: "ksnctf format write-up" 
+title: "ksnctf login write-up" 
 emoji: "📝" 
 type: "tech" 
 topics: ["ctf", "crypto"] 
