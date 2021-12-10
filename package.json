@@ -1,0 +1,23 @@
+{
+  "name": "zenn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cork0158/Zenn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cork0158/Zenn/issues"
+  },
+  "homepage": "https://github.com/Cork0158/Zenn#readme",
+  "dependencies": {
+    "zenn-cli": "^0.1.99"
+  }
+}
