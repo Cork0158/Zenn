@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Cork0158/Zenn#readme",
   "dependencies": {
-    "zenn-cli": "^0.1.99"
+    "zenn-cli": "^0.1.100"
   }
 }
