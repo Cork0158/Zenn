@@ -12,7 +12,8 @@ cork（コルク）です。
 
 # 「Drogon」入門
 
-## Drogonとは
+## 1. Drogonとは
+![](https://storage.googleapis.com/zenn-user-upload/11bf5cd4b3fc-20211223.jpg)
 [公式HP](https://drogon.docsforge.com/)によると
 > Drogonは、C++14/17ベースのHTTPアプリケーションフレームワークです。
 
@@ -24,18 +25,18 @@ cork（コルク）です。
 
 詳しくは**Drogon**の[Getting Started](https://drogon.docsforge.com/master/)を見てください。
 
-## 概要
+## 2. 概要
 **Drogon**をインストールして使ってみました。**Drogon**は2018年4月に発表された、比較的新しいフレームワークのため、日本語の文献がかなり少ないです。そのため、これから**Drogon**を使ってみようという人向けにこの記事を執筆しました。私はそこまで知識のある技術者ではないので、解釈が間違っている部分があるかと思います。訂正などはコメントで随時受け付けています。
 また、Macで開発をおこなったためMacの使用を前提に記事を書いています。（Linux・Windowsの人ごめんなさい）
 
 
-## 開発環境
+## 3. 開発環境
 - macOS Monterey 12.0.1
 - intel Core i5
 - dorogon 1.7.4
 
-## 環境構築
-### 必要ツール
+## 4. 環境構築
+### 4.1 必要ツール
 MacOSを使用する場合は以下の環境が必要です。
 - git
 - gcc/g++
@@ -58,7 +59,7 @@ $ brew install openssl
 $ brew install zlib
 ```
 
-### インストール
+### 4.2 インストール
 ワークスペースを作って、Githubからソースをクローンし、ビルドします。
 この記事ではワークスペースの名前を「drogon-test」をします。
 
@@ -81,9 +82,9 @@ $ make && sudo make install
 これで環境構築は終了です。
 次からは実際にdrogonを使っていきます。
 
-## サーバーを立ち上げる
+## 5. サーバーを立ち上げる
 
-### プロジェクトを作成する
+### 5.1 プロジェクトを作成する
 
 まず、`drogon-test`のディレクトリまで戻ります。
 以下のコマンドを打つことで、プロジェクトが作成できます。
@@ -124,7 +125,7 @@ int main() {
 
 ここでは`drogon`という名前空間が使われていますが、`using namespace drogon`で省略可能です。名前空間についてわからない方は調べてみてください。
 
-### ローカルサーバーを立ち上げる
+### 5.2 ローカルサーバーを立ち上げる
 以下のコマンドを叩いてローカルサーバーを立ち上げてみましょう。
 ```shellsession
 $ cd build      # ビルド用ディレクトリへ移動
@@ -139,7 +140,7 @@ $ ./sample      # 実行
 
 htmlファイルを何も作ってないので`404 Not Found`と表示され、フッターには**Drogon**のバージョンが表示されます。
 
-### 中身を表示させる
+### 5.3 中身を表示させる
 コントローラを一つ作成し、URLにアクセスしたときになにかが返ってくるようにします。
 以下のコマンドを叩き、「testctrl」という名前のコントローラを作成します。
 
@@ -200,8 +201,8 @@ $ ./sample
 
 このようにたった数行コードを変更するだけで、コントローラの設定が完了します。
 
-## Controller入門
-### Controllerとは
+## 6. Controller入門
+### 6.1 Controllerとは
 先ほど「testctrl」というコントローラを作成して、URLにアクセスした時にレスポンスが返ってくるようにしましたが、そもそもControllerとはどのような役割を持っているのでしょうか。
 
 [公式HP](https://drogon.docsforge.com/master/controller-introduction/)によると、
@@ -212,7 +213,7 @@ $ ./sample
 
 今回は[公式ドキュメント](https://drogon.docsforge.com/master/controller-introduction/controller-httpcontroller/)を参考に説明していくので、細かい部分で気になるところがあればこちらを参照してください。
 
-### HttpControllerの生成
+### 6.2 HttpControllerの生成
 `HttpSimpleController`を生成した時と同じように`drogon_ctl`コマンドを用いて生成します。
 通常のコントローラ生成コマンドは`-h`オプションをつけた、以下のようなコマンドで生成します。
 
@@ -265,7 +266,7 @@ class User : public drogon::HttpController<User> {
 }  // namespace demo
 ```
 
-### ファイルの編集
+### 6.3 ファイルの編集
 公式ドキュメントでは`「/info/{userId}」`でユーザ ID と名前を JSON で返すという処理を行うプログラムを書いているので、実装してみようと思います。
 （公式ドキュメントでは`login`も行っていますが、説明を簡略化するために省いています）
 
@@ -338,7 +339,7 @@ class User : public drogon::HttpController<User> {
 
 これで編集は完了です。実際に動作確認をして見ましょう。
 
-### 動作確認
+### 6.4 動作確認
 以下のコマンドを叩いてビルドしてください。
 ```shellsession
 $ cd ..
@@ -358,7 +359,7 @@ $ ./sample
 ```
 が出力されていると思います。（時間は読者のみなさんに依存します。）
 
-### URLパラメータのさまざまな記法
+### 6.5 URLパラメータのさまざまな記法
 
 UserIDをURLで表現する時によく使われる`/info?userId={xxx}`のようなURLも`demo_v1_User.h`に以下の処理を追加することで`/info/{xxx}`と同様に処理できます。
 
@@ -384,7 +385,7 @@ METHOD_ADD(User::getInfo,"/info?userId={1}",Get);
 
 これをみてわかるように、3番目がかなり可読性が高いことがわかります。開発者目線でも3番目を使用したほうがいいでしょう。
 
-### multiple path mapping
+### 6.6 multiple path mapping
 以下のルーティングを行えば、複数のURLリクエストを1つのコントローラで処理できます。
 ```cpp
 ADD_METHOD_TO(UserController::handler1,"/users/.*",Post);
@@ -394,7 +395,7 @@ ADD_METHOD_TO(UserController::handler2,"/{name}/[0-9]+",Post);
 
 ただ、これだけでなくもっと複雑な設定を行いたい場面も出てくると思います。そんな時は正規表現を用いて記述することができます。
 
-### Regular expression（正規表現）
+### 6.7 Regular expression（正規表現）
 公式ドキュメントには以下のような例が載っています。
 ```cpp
 ADD_METHOD_VIA_REGEX(UserController::handler1,"/users/(.*)",Post);
@@ -405,3 +406,5 @@ ADD_METHOD_VIA_REGEX(UserController::handler3,"/(?!data).*",Post);
 これをうまく使えば任意のURLに対してもれなく処理を行うことができます。だたし、競合しないように注意しましょう。
 
 正規表現については解説している本やサイトが無数にあるので自分にあった文献を参考に調べて見てください。
+
+## 7. View入門
