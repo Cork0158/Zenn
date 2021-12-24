@@ -408,3 +408,187 @@ ADD_METHOD_VIA_REGEX(UserController::handler3,"/(?!data).*",Post);
 正規表現については解説している本やサイトが無数にあるので自分にあった文献を参考に調べて見てください。
 
 ## 7. View入門
+
+### 7.1 Viewとは
+[公式ドキュメント](https://drogon.docsforge.com/master/view/)によると、
+> バックエンドのレンダリング技術を提供し、サーバープログラムがHTMLページを動的に生成できるようにする部分
+
+と書かれています。要するに**見た目(View)の部分を動的に生成することのできる**のです。
+**Drogon**はJSPと同じようにプログラムコードにHTMLを埋め込むことで直感的にコーディングすることができます。
+
+今回も[公式ドキュメント](https://drogon.docsforge.com/master/view/)に沿って話していくのでわからないことがあればこちらを参考にしてください。
+
+### 7.2 Viewのコントローラの生成
+今回は受け取ったGETパラメータを展開するようにしたいと思います。
+まずは、コントローラが必要不可欠なので「ListParameters」という名前のコントローラを作成します。
+以下のコマンドを叩いてください。
+
+```shellsession
+$ cd controllers
+$ drogon_ctl create controller ListParameters
+```
+
+まずは、ヘッダファイルを編集します。
+「/list_para」というURLをルーティングします。
+
+```diff cpp:ListParameters.h
+    #pragma once
+    #include <drogon/HttpSimpleController.h>
+    using namespace drogon;
+    class ListParameters : public drogon::HttpSimpleController<ListParameters> {
+    public:
+        virtual void asyncHandleHttpRequest(
+            const HttpRequestPtr &req,
+            std::function<void(const HttpResponsePtr &)> &&callback) override;
+        PATH_LIST_BEGIN
+        // list path definitions here;
+        // PATH_ADD("/path","filter1","filter2",HttpMethod1,HttpMethod2...);
++       PATH_ADD("/list_para", Get);
+
+        PATH_LIST_END
+    };
+```
+次にソースファイルを実装します。
+ここではCSP（後述）にどのようなデータをどのように渡すかを記述しています。
+
+```diff cpp:ListParameters.cc
+    #include "ListParameters.h"
+    void ListParameters::asyncHandleHttpRequest(
+        const HttpRequestPtr &req,
+        std::function<void(const HttpResponsePtr &)> &&callback) {
+        // write your application logic here
+        
++       // CSPに渡すデータを格納
++       auto para = req->getParameters();
++       HttpViewData data;
++       data.insert("title", "list parameters");
++       data.insert("parameters", para);
++
++       // ListParaCsp.cspにデータを渡す
++       auto res =
++           drogon::HttpResponse::newHttpViewResponse("ListParaCsp.csp", data);
++       callback(res);
+    }
+```
+※`ListParameters.cc`は参考記事とは少し異なります。
+
+### 7.3 CSPとは
+CSPとは、「C++ Server Pages」の略で、**サーバサイドでC++ライクな構文を処理し、HTMLを生成するもの**です。
+JavaにおけるJSPのC++版と考えるとわかりやすいと思います。
+
+CSPは**HTML内のあるスコープにおいてはC++を記述できる**ことが特徴です。
+以下にCSPに記法を紹介したいと思います。
+
+#### I. `<%inc %>`
+`<%inc %>`内では、 `#include`することが可能です。
+例：`<%inc#include "xx.h" %>`
+
+#### II. `<%c++ %>`
+`<%c++ %>`内では、**`#include`を除くC++のコード**が記述可能です。
+例：`<c++ std:string name="drogon"; %>`
+
+#### Ⅲ. `@@`
+`@@`は**コントローラから渡されるデータ変数**を表します。
+先ほどの`ListParameters.cc`の`date`がそれにあたります。
+逆に、CSPから`data`という名前では呼び出せません。
+
+#### Ⅳ. `$$`
+`$$`は`<<`と組み合わせることでページに出力することができます。
+C++でいう`std::cout`みたいなものです。
+
+#### Ⅴ. `[[ ]]`
+`[[ ]]`内の文字列をキーとして、**コントローラから渡されたデータから対応するものを見つけ出し、表示させます。**
+ただし、対応している文字列データ型は`const char *`、`std::string`、`const std::string`の3つであることに注意してください。また、同じ行の中で囲まなければいけません。
+
+#### Ⅵ. `{% %}`
+`{% %}`内では、あらかじめ`<%c++ %>`などで宣言された変数を表示できます。
+すなわち、`{%val.xx%}`と`<%c++ $$<<val.xx; %>`は同義です。
+ただし、同じ行の中で囲まなければいけません。
+
+#### Ⅶ. `<%view %>`
+`<%view %>`内では**サブビューとして、他のCSPファイルを展開できます。**
+`header.csp`が存在すれば、`<%view header %>`と記述することでその場に`header.csp`を展開することができます。
+これにより、各ページの共通部分を1つのページにまとめることが可能です。
+
+### 7.4 CSPの生成
+では、実際にCSPを実装してみましょう。
+「ListParaCsp.csp」という名前のCSPファイルを生成して編集します。
+
+```shellsession
+$ cd views
+$ touch ListParaCsp.csp
+```
+
+```html:ListParaCsp.csp
+<!DOCTYPE html>
+<html>
+<%c++
+// dataからunorder_mapとしてパラメータを取得
+auto para = @@.get<std::unordered_map<std::string, std::string>>("parameters");
+
+// 適当に変数宣言する
+auto name = "Drogon Inc.";
+auto date = "2021.12.25";
+%>
+<head>
+    <meta charset="UTF-8">
+    <title>[[ title ]]</title>
+</head>
+<body>
+
+<!-- 変数展開はどちらでも良い -->
+<p>Hello, {% name %}</p>
+<p>Date: <%c++ $$ << date; %></p>
+
+<%c++ if(para.size()>0){%>
+<H1>Parameters</H1>
+<table border="1">
+    <tr>
+        <th>name</th>
+        <th>value</th>
+    </tr>
+    <!-- イテレーションループでパラメータを展開 -->
+    <%c++ for(auto iter:para){ %>
+    <tr>
+        <td>{% iter.first %}</td> 
+        <td><%c++ $$<<iter.second;%></td>
+    </tr>
+    <%c++ } // endfor%>
+</table>
+<%c++ }else{ %>
+<H1>no parameter</H1>
+<%c++ } // endif %>
+</body>
+</html>
+```
+
+コーディングが終わったらビルドして実行してみましょう。
+```shellsession
+$ cd ..
+$ cd build
+$ cmake ..
+$ make
+$ ./sample
+```
+
+動作確認のために、[http://localhost/list_para?p1=a&p2=b&p3=c](http://localhost/list_para?p1=a&p2=b&p3=c)にアクセスしてみると、以下のような画面が表示されると思います。（日付がクリスマスになっているのは執筆時の日付がクリスマスだったからです。これ以上はなにも聞かないでください。）
+
+![](https://storage.googleapis.com/zenn-user-upload/8bf8d3646f20-20211224.png =300x)
+
+また、以下のコマンドを叩くことでC++ソースファイルを生成するコントローラ（`ListParaCsp.h`と`ListParaCsp.cc`）を、view ディレクトリ下に自動生成してくれる機能もあります。
+
+```shellsession
+$ drogon_ctl create view ListParaCsp.csp
+```
+
+#### 余談
+CSPファイルを`ListParameters.csp`とせず、`ListParaCsp.csp`にしていますが前者のファイル名ではビルドが失敗したため、後者のファイル名に変更しました。（リンカのエラーが出てたのですが調べても解決策がわからなかったので、渋々名前を変更しました。この変更は現段階では問題ないですが、あまり良くない変更だと思います。）
+
+## 8. 最後に
+みなさん、やって見ていかがでしたでしょうか。C++に慣れていない人にとっては少し難しかったかもしれませんが、使って見てもいいのではないでしょうか。
+また、僕自身も調べながら執筆しているので言葉が間違っていたり、理解が間違ったりしている部分もあるかと思います。その点については随時指摘していただけるとありがたいです。
+
+また、この記事の執筆にあたり下記の記事には大変おせわになりました。この場をお借りして感謝申し上げます。ただ、この記事のコードを参考にはしているものの変更している部分の多々あるので、両方を参考にしながら作業することはおすすめしません。
+https://rightcode.co.jp/blog/information-technology/fastest-c-web-framework-drogon-quick-start
+https://rightcode.co.jp/blog/information-technology/fastest-c-web-framework-drogon-controller
+https://rightcode.co.jp/blog/information-technology/fastest-c-web-framework-drogon-view
