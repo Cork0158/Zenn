@@ -2,7 +2,7 @@
 title: "「Drogon」入門" 
 emoji: "📝" 
 type: "tech" 
-topics: ["Drogon", "Web", "framework","http", "cpp", "html"] 
+topics: ["Web", "framework","http", "cpp", "html"] 
 published: true
 --- 
 
