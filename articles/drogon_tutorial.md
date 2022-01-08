@@ -76,7 +76,7 @@ $ cmake ..
 $ make && sudo make install
 ```
 上記のコマンドを叩くとインストール完了です。
-正常にインストールが出来ていたら`$ drogon-ctl -v`とコマンドを叩くと以下の写真のような表示がされると思います。
+正常にインストールが出来ていたら`$ drogon_ctl -v`とコマンドを叩くと以下の写真のような表示がされると思います。
 
 ![](https://storage.googleapis.com/zenn-user-upload/14aa1271b5b1-20211221.png)*dorogonのバージョンとロゴ*
 
