@@ -16,13 +16,13 @@ c0rkとしてcyseclabとして研究室の先輩と2人で参加しました．
 
 # writeup
 
-- [[OSINT] banana]()
-- [[OSINT] TakaiTakai]()
-- [[OSINT] TsukuCTF Big Fan 1]()
-- [[OSINT] TsukuCTF Big Fan 3]()
-- [[OSINT] Robot]()
-- [[OSINT] Bus POWER]()
-- [[Web] bughunter]()
+- [[OSINT] banana](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-banana)
+- [[OSINT] TakaiTakai](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-takaitakai)
+- [[OSINT] TsukuCTF Big Fan 1](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-tsukuctf-big-fan-1)
+- [[OSINT] TsukuCTF Big Fan 3](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-tsukuctf-big-fan-3)
+- [[OSINT] Robot](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-robot)
+- [[OSINT] Bus POWER](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-bus-power)
+- [[Web] bughunter](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bweb%5D-bughunter)
 
 ## [OSINT] banana
 Google lensにつっこみましたががでなかったので，色々な検索エンジンの画像検索を使ってみました．https://yandex.com/images/ で検索したらどうやらグアムであることがわかりました．
