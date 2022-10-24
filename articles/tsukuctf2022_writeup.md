@@ -15,14 +15,14 @@ c0rkとしてcyseclabとして研究室の先輩と2人で参加しました．
 ![](https://storage.googleapis.com/zenn-user-upload/5cfd9f049d08-20221024.png)
 
 # writeup
-
-- [[OSINT] banana](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-banana)
-- [[OSINT] TakaiTakai](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-takaitakai)
-- [[OSINT] TsukuCTF Big Fan 1](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-tsukuctf-big-fan-1)
-- [[OSINT] TsukuCTF Big Fan 3](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-tsukuctf-big-fan-3)
-- [[OSINT] Robot](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-robot)
-- [[OSINT] Bus POWER](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bosint%5D-bus-power)
-- [[Web] bughunter](https://zenn.dev/cork/articles/tsukuctf2022_writeup#%5Bweb%5D-bughunter)
+解いた問題
+- [[OSINT] banana](#osint-banana)
+- [[OSINT] TakaiTakai](#osint-takaitakai)
+- [[OSINT] TsukuCTF Big Fan 1](#osint-tsukuctf-big-fan-1)
+- [[OSINT] TsukuCTF Big Fan 3](#osint-tsukuctf-big-fan-3)
+- [[OSINT] Robot](#osint-robot)
+- [[OSINT] Bus POWER](#osint-bus-power)
+- [[Web] bughunter](#web-bughunter)
 
 ## [OSINT] banana
 Google lensにつっこみましたががでなかったので，色々な検索エンジンの画像検索を使ってみました．https://yandex.com/images/ で検索したらどうやらグアムであることがわかりました．
