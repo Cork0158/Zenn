@@ -16,13 +16,13 @@ c0rkとしてcyseclabとして研究室の先輩と2人で参加しました．
 
 # writeup
 解いた問題
-- [[OSINT] banana](#osint-banana)
-- [[OSINT] TakaiTakai](#osint-takaitakai)
-- [[OSINT] TsukuCTF Big Fan 1](#osint-tsukuctf-big-fan-1)
-- [[OSINT] TsukuCTF Big Fan 3](#osint-tsukuctf-big-fan-3)
-- [[OSINT] Robot](#osint-robot)
-- [[OSINT] Bus POWER](#osint-bus-power)
-- [[Web] bughunter](#web-bughunter)
+- [OSINT] banana
+- [OSINT] TakaiTakai
+- [OSINT] TsukuCTF Big Fan 1
+- [OSINT] TsukuCTF Big Fan 3
+- [OSINT] Robot
+- [OSINT] Bus POWER
+- [Web] bughunter
 
 ## [OSINT] banana
 Google lensにつっこみましたががでなかったので，色々な検索エンジンの画像検索を使ってみました．https://yandex.com/images/ で検索したらどうやらグアムであることがわかりました．
